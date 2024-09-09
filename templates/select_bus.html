@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Bus</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .btn-outline-primary {
+            transition: all 0.3s ease;
+        }
+        .btn-outline-primary:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-4">Available Buses</h2>
+        <div class="row">
+            {% for bus in buses %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ bus.name }}</h5>
+                        <p class="card-text">From: {{ bus.source }} <br> To: {{ bus.destination }}</p>
+                        <p class="card-text"><strong>Price:</strong> ₹{{ bus.price }}</p>
+                        <p class="card-text"><strong>Amenities:</strong> {{ bus.amenities }}</p>
+                        <a href="{{ url_for('select_bus', bus_id=loop.index) }}" class="btn btn-outline-primary btn-block">Select Bus</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

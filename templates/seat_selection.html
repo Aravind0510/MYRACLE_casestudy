@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Seats</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .seat-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        .seat {
+            display: inline-block;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        .seat.selected {
+            background-color: #007bff;
+            color: white;
+        }
+        .seat-input {
+            margin-top: 20px;
+        }
+        .seat-input input {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Select Your Seats</h2>
+        <form action="/select-seats" method="POST">
+            <div class="seat-container">
+                <label class="seat">
+                    <input type="checkbox" name="seats" value="1A"> 1A
+                </label>
+                <label class="seat">
+                    <input type="checkbox" name="seats" value="1B"> 1B
+                </label>
+                <label class="seat">
+                    <input type="checkbox" name="seats" value="1C"> 1C
+                </label>
+                <label class="seat">
+                    <input type="checkbox" name="seats" value="1D"> 1D
+                </label>
+                <label class="seat">
+                    <input type="checkbox" name="seats" value="2A"> 2A
+                </label>
+                <label class="seat">
+                    <input type="checkbox" name="seats" value="2B"> 2B
+                </label>
+                <label class="seat">
+                    <input type="checkbox" name="seats" value="2C"> 2C
+                </label>
+                <label class="seat">
+                    <input type="checkbox" name="seats" value="2D"> 2D
+                </label>
+                <label class="seat">
+                    <input type="checkbox" name="seats" value="3A"> 3A
+                </label>
+                <label class="seat">
+                    <input type="checkbox" name="seats" value="3B"> 3B
+                </label>
+                <label class="seat">
+                    <input type="checkbox" name="seats" value="3C"> 3C
+                </label>
+                <label class="seat">
+                    <input type="checkbox" name="seats" value="3D"> 3D
+                </label>
+                <label class="seat">
+                    <input type="checkbox" name="seats" value="4A"> 4A
+                </label>
+                <label class="seat">
+                    <input type="checkbox" name="seats" value="4B"> 4B
+                </label>
+                <label class="seat">
+                    <input type="checkbox" name="seats" value="4C"> 4C
+                </label>
+                <label class="seat">
+                    <input type="checkbox" name="seats" value="4D"> 4D
+                </label>
+                <label class="seat">
+                    <input type="checkbox" name="seats" value="5A"> 5A
+                </label>
+                <label class="seat">
+                    <input type="checkbox" name="seats" value="5B"> 5B
+                </label>
+                <label class="seat">
+                    <input type="checkbox" name="seats" value="5C"> 5C
+                </label>
+            </div>
+            <div class="seat-input">
+                <h4>Enter Name for Each Selected Seat</h4>
+                <div id="seat-names-container"></div>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Proceed to Payment</button>
+        </form>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const seatContainer = document.querySelector('.seat-container');
+            const seatNamesContainer = document.getElementById('seat-names-container');
+            
+            seatContainer.addEventListener('change', function (event) {
+                const checkboxes = seatContainer.querySelectorAll('input[type="checkbox"]');
+                seatNamesContainer.innerHTML = '';  // Clear previous seat name inputs
+                
+                checkboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        const seat = checkbox.value;
+                        const nameInput = document.createElement('div');
+                        nameInput.classList.add('form-group');
+                        nameInput.innerHTML = `
+                            <label for="${seat}">Name for ${seat}</label>
+                            <input type="text" class="form-control" name="seat_names[${seat}]" id="${seat}" placeholder="Enter name for ${seat}" required>
+                        `;
+                        seatNamesContainer.appendChild(nameInput);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

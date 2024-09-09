@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .btn-success {
+            transition: background-color 0.3s ease;
+        }
+        .btn-success:hover {
+            background-color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Apply Offers and Pay</h2>
+        <h4>Bus: {{ bus.name }}</h4>
+        <h5>Selected Seats: {{ seats | join(', ') }}</h5>
+        <form id="offerForm" class="mt-3">
+            <div class="form-group">
+                <label for="offer_code">Enter Offer Code:</label>
+                <input type="text" class="form-control" id="offer_code" name="offer_code">
+            </div>
+            <button type="button" class="btn btn-info" id="applyOffer">Apply Offer</button>
+        </form>
+        <div id="offerDetails" class="mt-3"></div>
+        <form action="/confirm-booking" method="POST" class="mt-4">
+            <div class="form-group">
+                <label for="email">Enter Your Email:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <button type="submit" class="btn btn-success btn-block">Confirm Booking</button>
+        </form>
+    </div>
+    <script>
+        document.getElementById('applyOffer').addEventListener('click', function() {
+            const offerCode = document.getElementById('offer_code').value;
+            fetch('/apply-offer', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({offer_code: offerCode})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.offer) {
+                    document.getElementById('offerDetails').innerHTML = `<p>Offer Applied: ${data.offer.description}</p>`;
+                } else {
+                    document.getElementById('offerDetails').innerHTML = `<p class="text-danger">Invalid offer code.</p>`;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
